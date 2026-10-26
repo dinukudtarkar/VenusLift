@@ -1,0 +1,211 @@
+/* ============ Scene container ============ */
+.liftscene {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* ============ Lift shaft ============ */
+.liftscene-shaft {
+  --dur: 14s;
+  --delay: 0s;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: clamp(64px, 9vw, 128px);
+  overflow: hidden;
+  opacity: 0.85;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.03),
+    rgba(255, 255, 255, 0.12) 50%,
+    rgba(255, 255, 255, 0.03)
+  );
+  border-left: 1px solid rgba(245, 158, 11, 0.28);
+  border-right: 1px solid rgba(245, 158, 11, 0.28);
+  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.35);
+}
+
+.liftscene-shaft-left  { left: 5%; }
+.liftscene-shaft-right {
+  right: 5%;
+  --dur: 18s;
+  --delay: -8s; /* offset so the two lifts never move in sync */
+}
+
+/* guide rails */
+.liftscene-shaft::before,
+.liftscene-shaft::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, rgba(245, 158, 11, 0.05), rgba(245, 158, 11, 0.45), rgba(245, 158, 11, 0.05));
+}
+.liftscene-shaft::before { left: 12%; }
+.liftscene-shaft::after  { right: 12%; }
+
+/* floor markers */
+.liftscene-floors {
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 118px,
+    rgba(245, 158, 11, 0.3) 118px,
+    rgba(245, 158, 11, 0.3) 120px
+  );
+}
+
+/* ============ Lift car ============ */
+.liftscene-car {
+  position: absolute;
+  left: 18%;
+  right: 18%;
+  height: clamp(84px, 10vw, 130px);
+  bottom: -30%;
+  border-radius: 6px;
+  border: 1px solid rgba(245, 158, 11, 0.7);
+  /* warm interior light, revealed when the doors open */
+  background: radial-gradient(circle at 50% 40%, rgba(253, 230, 138, 0.95), rgba(245, 158, 11, 0.65));
+  box-shadow:
+    0 0 28px rgba(245, 158, 11, 0.45),
+    inset 0 0 16px rgba(255, 255, 255, 0.25);
+  animation: liftscene-rise var(--dur) var(--delay) infinite;
+  will-change: bottom;
+}
+
+/* steel cable above the car */
+.liftscene-cable {
+  position: absolute;
+  left: 50%;
+  bottom: 100%;
+  width: 2px;
+  height: 130vh;
+  transform: translateX(-50%);
+  background: linear-gradient(to top, rgba(245, 158, 11, 0.7), rgba(245, 158, 11, 0.05));
+}
+
+/* floor indicator with a pulsing up arrow */
+.liftscene-display {
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  width: 28px;
+  height: 13px;
+  transform: translateX(-50%);
+  border-radius: 3px;
+  background: #111827;
+  border: 1px solid rgba(245, 158, 11, 0.7);
+}
+.liftscene-display::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 7px solid #fbbf24;
+  animation: liftscene-arrow 1.2s ease-in-out infinite;
+}
+
+/* sliding doors */
+.liftscene-doors {
+  position: absolute;
+  inset: 4px;
+  overflow: hidden;
+  border-radius: 3px;
+}
+.liftscene-door {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  background: linear-gradient(90deg, #374151, #9ca3af 45%, #4b5563);
+  animation-duration: var(--dur);
+  animation-delay: var(--delay);
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+.liftscene-door-l {
+  left: 0;
+  border-right: 1px solid rgba(17, 24, 39, 0.6);
+  animation-name: liftscene-door-left;
+}
+.liftscene-door-r {
+  right: 0;
+  border-left: 1px solid rgba(17, 24, 39, 0.6);
+  animation-name: liftscene-door-right;
+}
+
+/* ============ Rising light streaks ============ */
+.liftscene-streak {
+  position: absolute;
+  bottom: -120px;
+  width: 2px;
+  height: 90px;
+  border-radius: 2px;
+  background: linear-gradient(to top, transparent, rgba(251, 191, 36, 0.75));
+  opacity: 0;
+  animation: liftscene-streak 5s linear infinite;
+}
+.liftscene-streak:nth-child(3) { left: 24%; animation-delay: 0s; }
+.liftscene-streak:nth-child(4) { left: 38%; animation-delay: 1.6s; animation-duration: 6s; }
+.liftscene-streak:nth-child(5) { left: 52%; animation-delay: 3.2s; animation-duration: 4.5s; }
+.liftscene-streak:nth-child(6) { left: 66%; animation-delay: 0.8s; animation-duration: 5.5s; }
+.liftscene-streak:nth-child(7) { left: 78%; animation-delay: 2.4s; }
+
+/* ============ Keyframes ============ */
+/* travels up, stops at three floors, then leaves through the top */
+@keyframes liftscene-rise {
+  0%   { bottom: -30%; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); }
+  22%  { bottom: 18%; }
+  30%  { bottom: 18%; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); }
+  52%  { bottom: 52%; }
+  60%  { bottom: 52%; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); }
+  82%  { bottom: 86%; }
+  88%  { bottom: 86%; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); }
+  100% { bottom: 115%; }
+}
+
+/* doors open while the car is stopped at a floor */
+@keyframes liftscene-door-left {
+  0%, 20%, 32%, 50%, 62%, 80%, 90%, 100% { transform: translateX(0); }
+  23%, 29%, 53%, 59%, 83%, 87%           { transform: translateX(-102%); }
+}
+@keyframes liftscene-door-right {
+  0%, 20%, 32%, 50%, 62%, 80%, 90%, 100% { transform: translateX(0); }
+  23%, 29%, 53%, 59%, 83%, 87%           { transform: translateX(102%); }
+}
+
+@keyframes liftscene-arrow {
+  0%, 100% { opacity: 0.35; transform: translateX(-50%) translateY(2px); }
+  50%      { opacity: 1;    transform: translateX(-50%) translateY(-1px); }
+}
+
+@keyframes liftscene-streak {
+  0%   { transform: translateY(0); opacity: 0; }
+  10%  { opacity: 0.8; }
+  85%  { opacity: 0.5; }
+  100% { transform: translateY(-115vh); opacity: 0; }
+}
+
+/* ============ Responsive ============ */
+@media (max-width: 767px) {
+  .liftscene-shaft { width: 58px; opacity: 0.55; }
+  .liftscene-shaft-left { left: 3%; }
+  .liftscene-shaft-right { display: none; }
+  .liftscene-streak:nth-child(5),
+  .liftscene-streak:nth-child(7) { display: none; }
+}
+
+/* ============ Reduced motion ============ */
+@media (prefers-reduced-motion: reduce) {
+  .liftscene-car { bottom: 30%; }
+  .liftscene-streak { display: none; }
+}

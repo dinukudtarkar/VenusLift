@@ -2,141 +2,300 @@
 
 :root {
   --gold: #cca34d;
+  --gold-light: #e8c97a;
+  --gold-dark: #b58d2a;
   --dark: #1a1a1a;
   --gray: #666;
 }
 
-/* .hero-section {
-  position: relative;
-  width: 100%;
-  height: 85vh;
-  min-height: 600px;
-  display: flex;
-  align-items: center;
-  background-image: url('../../assets/images/herobg.png'); 
-  background-size: cover;
-  background-position: center;
-} */
+/* ============ Section ============ */
 .hero-section {
   position: relative;
   width: 100%;
-  min-height: 100vh;
-  /* Adjust based on your design */
+  /* slightly shorter than the viewport so the feature cards peek into view */
+  min-height: calc(100vh - 2rem);
+  min-height: calc(100svh - 2rem);
   overflow: hidden;
   display: flex;
   align-items: center;
-  /* Centers content vertically */
-  justify-content: left;
-  /* Centers content horizontally */
+  justify-content: flex-start;
+  background-color: #111;
+  box-sizing: border-box;
+  /* bottom padding leaves room for the cards that overlap the hero */
+  padding: 6rem 0 calc(var(--features-overlap, 70px) + 3rem);
+}
+
+/* Background image with slow Ken Burns zoom */
+.hero-bg-image {
+  position: absolute;
+  inset: 0;
   background-image: url('../../assets/images/herobg.png');
   background-size: cover;
   background-position: center;
+  transform-origin: 60% 50%;
+  animation: hero-kenburns 22s ease-in-out infinite alternate;
+  z-index: 0;
 }
 
+/* Overlay: directional gradient + soft vignette */
 .hero-background {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to right, rgba(17, 17, 17, 0.9) 0%, rgba(17, 17, 17, 0.6) 40%, rgba(17, 17, 17, 0.1) 100%);
+  inset: 0;
+  background:
+    linear-gradient(
+      to right,
+      rgba(17, 17, 17, 0.92) 0%,
+      rgba(17, 17, 17, 0.65) 40%,
+      rgba(17, 17, 17, 0.15) 100%
+    );
   z-index: 1;
 }
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 45%, rgba(0, 0, 0, 0.55) 100%);
+}
 
+/* Gold line across the bottom edge */
+.hero-section::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, var(--gold), var(--gold-light), var(--gold), transparent);
+  z-index: 3;
+  transform: scaleX(0);
+  animation: hero-line-grow 1.6s 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* ============ Decorative elements ============ */
+.hero-side-line {
+  position: absolute;
+  left: 2rem;
+  top: 50%;
+  width: 2px;
+  height: 0;
+  background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+  transform: translateY(-50%);
+  z-index: 2;
+  animation: hero-side-grow 1.6s 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.hero-particles {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+}
+.hero-particle {
+  position: absolute;
+  bottom: -10px;
+  border-radius: 50%;
+  background: var(--gold-light);
+  box-shadow: 0 0 10px 2px rgba(204, 163, 77, 0.7);
+  opacity: 0;
+  animation-name: hero-rise;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+/* ============ Content ============ */
 .hero-content {
   position: relative;
-  z-index: 2;
-  /* Keeps text above your background overlay */
-  width: 80%;
+  z-index: 3;
+  width: 100%;
   max-width: 800px;
-  /* Prevents it from stretching endlessly on wide monitors */
   padding: 0 1.5rem;
-  /* Crucial: adds safety margins on mobile screens */
   box-sizing: border-box;
-  /* Ensures padding doesn't add to the total width */
   text-align: left;
-  /* Or 'left' if your design is left-aligned */
 }
 
 .hero-subtitle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
   color: var(--gold);
-  font-size: 1.1rem;
+  font-size: clamp(0.8rem, 2.4vw, 1.1rem);
   font-weight: 600;
-  letter-spacing: 2px;
-  margin-bottom: 0.5rem;
+  letter-spacing: 0.25em;
+  margin: 0 0 0.75rem;
+  opacity: 0;
+  animation: hero-fade-up 0.9s 0.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.hero-subtitle::before {
+  content: '';
+  width: 2.5rem;
+  height: 2px;
+  background: var(--gold);
+  transform-origin: left;
+  animation: hero-line-x 0.9s 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .hero-title {
-  /* 1. Force long words to break onto the next line if they exceed screen width */
   overflow-wrap: break-word;
   word-wrap: break-word;
-
-  /* 2. Ensure the title container never exceeds the screen size */
   max-width: 100%;
+  font-size: clamp(2.25rem, 8vw, 4.5rem);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: 0.02em;
+  margin: 0 0 1rem;
+}
 
-  /* 3. Make the font size responsive (highly recommended) */
-  /* clamp(minimum_size, preferred_size, maximum_size) */
-  /* This ensures the text shrinks gracefully on mobile phones */
-  font-size: clamp(2.5rem, 8vw, 4.5rem);
-
-  line-height: 1.2;
-  margin-bottom: 1rem;
+.hero-title-line {
+  display: inline-block;
+  opacity: 0;
+  animation: hero-fade-up 1s 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.hero-title-line-2 {
+  animation-delay: 0.65s;
 }
 
 .text-white {
   color: #ffffff;
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.45);
 }
 
+/* Shimmering gold gradient text */
 .text-gold {
+  background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 40%, var(--gold) 60%, var(--gold-dark) 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
   color: var(--gold);
+}
+.text-gold.hero-title-line {
+  animation:
+    hero-fade-up 1s 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards,
+    hero-shimmer 5s 1.8s linear infinite;
 }
 
 .hero-divider {
   width: 60px;
   height: 3px;
   background-color: var(--gold);
-  margin-bottom: 1.5rem;
+  margin: 0 0 1.5rem;
+  transform-origin: left;
+  transform: scaleX(0);
+  animation: hero-divider-grow 0.9s 0.95s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .hero-description {
-  font-size: 1rem;
-  line-height: 1.6;
-  max-width: 700px;
-  /* Constrains the paragraph width for better readability */
-  margin: 1.5rem auto;
-  /* Centers the paragraph block within the content */
-  color: #ffffff;
-  /* Adjust to your brand colors */
+  font-size: clamp(0.95rem, 2.2vw, 1.125rem);
+  line-height: 1.7;
+  max-width: 36rem;
+  margin: 0 0 2.25rem;
+  color: rgba(255, 255, 255, 0.88);
   white-space: normal;
-  /* Prevents text from staying on a single line */
   word-wrap: break-word;
-  /* Forces long words to break if necessary */
+  opacity: 0;
+  animation: hero-fade-up 0.9s 1.1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
+/* ============ Button ============ */
 .hero-btn {
-  display: flex;
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
   align-items: center;
   gap: 10px;
-  background-color: var(--gold);
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
   color: #fff;
   border: none;
+  border-radius: 2px;
   padding: 1rem 2rem;
   font-size: 0.9rem;
   font-weight: 700;
-  letter-spacing: 1px;
+  letter-spacing: 0.12em;
   cursor: pointer;
-  transition: background-color 0.3s;
+  box-shadow: 0 10px 24px -8px rgba(204, 163, 77, 0.6);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  opacity: 0;
+  animation: hero-fade-up 0.9s 1.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* light sweep */
+.hero-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -80%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transform: skewX(-20deg);
 }
 
 .hero-btn:hover {
-  background-color: #b58d2a;
+  transform: translateY(-3px);
+  box-shadow: 0 16px 32px -10px rgba(204, 163, 77, 0.85);
+}
+.hero-btn:hover::before {
+  animation: hero-sweep 0.8s ease;
+}
+.hero-btn:active {
+  transform: translateY(-1px);
+}
+.hero-btn:focus-visible {
+  outline: 2px solid var(--gold-light);
+  outline-offset: 3px;
+}
+
+.hero-btn-text,
+.arrow-icon {
+  position: relative;
+  z-index: 1;
 }
 
 .arrow-icon {
   width: 18px;
   height: 18px;
+  transition: transform 0.3s ease;
+}
+.hero-btn:hover .arrow-icon {
+  transform: translateX(6px);
 }
 
+/* ============ Scroll cue ============ */
+.hero-scroll {
+  position: absolute;
+  left: 50%;
+  bottom: 1.75rem;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  opacity: 0;
+  animation: hero-fade-in 1s 1.8s ease forwards;
+}
+.hero-scroll-line {
+  position: relative;
+  width: 1px;
+  height: 3rem;
+  background: rgba(255, 255, 255, 0.25);
+  overflow: hidden;
+}
+.hero-scroll-line::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 40%;
+  background: var(--gold);
+  animation: hero-scroll-drop 2s ease-in-out infinite;
+}
+
+/* ============ Carousel indicators (kept from original) ============ */
 .carousel-indicators {
   position: absolute;
   bottom: -40px;
@@ -145,7 +304,6 @@
   display: flex;
   gap: 8px;
 }
-
 .dot {
   width: 8px;
   height: 8px;
@@ -153,7 +311,6 @@
   background-color: rgba(255, 255, 255, 0.4);
   cursor: pointer;
 }
-
 .dot.active {
   background-color: var(--gold);
   width: 12px;
@@ -161,62 +318,159 @@
   margin-top: -2px;
 }
 
-@media (min-width: 768px) {
+/* ============ Keyframes ============ */
+@keyframes hero-kenburns {
+  from { transform: scale(1) translate(0, 0); }
+  to   { transform: scale(1.12) translate(-1.5%, -1%); }
+}
+@keyframes hero-fade-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes hero-fade-in {
+  to { opacity: 1; }
+}
+@keyframes hero-divider-grow {
+  to { transform: scaleX(1); }
+}
+@keyframes hero-line-x {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+@keyframes hero-line-grow {
+  to { transform: scaleX(1); }
+}
+@keyframes hero-side-grow {
+  to { height: 40%; }
+}
+@keyframes hero-shimmer {
+  to { background-position: 200% center; }
+}
+@keyframes hero-sweep {
+  to { left: 140%; }
+}
+@keyframes hero-scroll-drop {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(260%); }
+}
+@keyframes hero-rise {
+  0%   { transform: translateY(0) translateX(0); opacity: 0; }
+  10%  { opacity: 0.9; }
+  90%  { opacity: 0.6; }
+  100% { transform: translateY(-105vh) translateX(30px); opacity: 0; }
+}
+
+/* ============ Responsive ============ */
+
+/* Large desktops: more breathing room */
+@media (min-width: 1024px) {
+  .hero-content {
+    margin-left: 8rem;
+  }
+  .hero-side-line {
+    left: 4rem;
+  }
+}
+
+/* Ultra-wide: keep content from drifting too far */
+@media (min-width: 1600px) {
+  .hero-content {
+    margin-left: max(8rem, calc((100vw - 1400px) / 2));
+    max-width: 900px;
+  }
+}
+
+/* Tablets */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .hero-content {
+    margin-left: 4rem;
+  }
+  .hero-side-line {
+    left: 2rem;
+  }
+}
+
+/* Mobile and small tablets */
+@media (max-width: 767px) {
+  .hero-section {
+    min-height: 88vh;
+    min-height: 88svh;
+    padding: 5rem 0 calc(var(--features-overlap, 56px) + 2.5rem);
+  }
+  /* stronger overlay since text spans the full width */
+  .hero-background {
+    background: linear-gradient(
+      to bottom,
+      rgba(17, 17, 17, 0.8) 0%,
+      rgba(17, 17, 17, 0.7) 50%,
+      rgba(17, 17, 17, 0.85) 100%
+    );
+  }
+  .hero-side-line {
+    display: none;
+  }
+  .hero-content {
+    margin-left: 0;
+    padding: 0 1.5rem;
+  }
+  .hero-divider {
+    margin: 0.75rem 0 1.25rem;
+  }
   .hero-description {
-    font-size: 1rem;
+    margin: 0 0 1.75rem;
   }
+}
 
-  /* Mobile View Adjustments (Screens smaller than 768px) */
-  @media (max-width: 768px) {
-
-    /* 1. Reduce the space between text elements inside .hero-content */
-    .hero-title {
-      margin-bottom: 0.5rem;
-      /* Reduces space below the main title */
-    }
-
-    .hero-subtitle {
-      margin-bottom: 0.5rem;
-      /* Reduces space below the subtitle */
-    }
-
-    .hero-description {
-      margin: 1rem 0;
-      /* Reduces the top and bottom margins around the paragraph */
-    }
-
-    .hero-divider {
-      margin: 1rem 0;
-      /* Shrink the space around the divider line if you have one */
-    }
-
-    /* 2. If the ENTIRE dark background section is too tall on mobile, reduce its min-height */
-    .hero-section {
-      min-height: 60vh;
-      /* Changes it from taking up the full 100% of the screen height to 60% */
-      padding: 3rem 0;
-      /* Adds fixed padding instead of forcing it to stretch */
-    }
+/* Small phones: full-width button, tighter spacing */
+@media (max-width: 480px) {
+  .hero-subtitle::before {
+    width: 1.5rem;
   }
-
-  /* Apply changes only to screens 768px and wider (Tablets & Desktops) */
-  @media (min-width: 768px) {
-    .hero-content {
-      /* Choose ONE of the options below depending on how you want it to behave */
-
-      /* Option 1: A fixed spacing (remains consistent regardless of screen size) */
-      margin-left: 4rem;
-
-      /* Option 2: A percentage (pushes further right as the screen gets wider) */
-      /* margin-left: 10%; */
-    }
+  .hero-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 0.95rem 1.5rem;
   }
-
-  /* If you want it pushed even further ONLY on massive desktop monitors (1024px+) */
-  @media (min-width: 1024px) {
-    .hero-content {
-      margin-left: 8rem;
-    }
+  .hero-scroll {
+    display: none;
   }
+}
 
+/* Short landscape screens (phones turned sideways) */
+@media (max-height: 520px) and (orientation: landscape) {
+  .hero-section {
+    min-height: 100vh;
+    padding: 4rem 0 calc(var(--features-overlap, 56px) + 2rem);
+  }
+  .hero-scroll {
+    display: none;
+  }
+  .hero-title {
+    font-size: clamp(1.75rem, 6vw, 2.75rem);
+  }
+}
+
+/* ============ Reduced motion ============ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .hero-subtitle,
+  .hero-title-line,
+  .hero-description,
+  .hero-btn,
+  .hero-scroll {
+    opacity: 1 !important;
+  }
+  .hero-divider,
+  .hero-section::after {
+    transform: scaleX(1) !important;
+  }
+  .hero-side-line {
+    height: 40%;
+  }
+  .hero-particles {
+    display: none;
+  }
 }

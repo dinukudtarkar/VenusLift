@@ -1,5 +1,6 @@
 import React from "react";
 import "../assets/styles/About.css";
+import liftImage  from "../assets/images/lift_image2.png";
 
 const stats = [
   { value: "500+", label: "Projects Completed" },
@@ -50,7 +51,7 @@ const AboutUs: React.FC = () => {
           <div className="about-image-col">
             <div className="about-image-wrapper">
               <img
-                src="https://picsum.photos/seed/venus-elevator-modern/800/600.jpg"
+                src={liftImage}
                 alt="Modern elevator by Venus Lift"
                 className="about-image"
               />

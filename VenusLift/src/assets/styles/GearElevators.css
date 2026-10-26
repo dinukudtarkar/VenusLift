@@ -1,0 +1,367 @@
+/* =====================================
+   VENUS LIFTS - GEAR ELEVATORS
+===================================== */
+
+.gear-elevator-section {
+    --gear-accent: #b79659;
+    --gear-text: #242520;
+    --gear-muted: #777870;
+
+    width: 100%;
+    padding: 90px 24px;
+    overflow: hidden;
+    background: #f8f8f6;
+    color: var(--gear-text);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.gear-elevator-section *,
+.gear-elevator-section *::before,
+.gear-elevator-section *::after {
+    box-sizing: border-box;
+}
+
+.gear-elevator-container {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.92fr);
+    align-items: center;
+    gap: 75px;
+
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* =====================================
+   IMAGE AREA
+===================================== */
+
+.gear-elevator-visual {
+    min-width: 0;
+}
+
+.gear-elevator-image-wrapper {
+    position: relative;
+    min-height: 470px;
+    overflow: hidden;
+    background: #e9e8e2;
+    border: 1px solid #e2e0d8;
+}
+
+.gear-elevator-image {
+    display: block;
+    width: 100%;
+    height: 470px;
+    object-fit: contain;
+    object-position: center;
+    transition: transform 0.6s ease;
+}
+
+.gear-elevator-image-wrapper:hover .gear-elevator-image {
+    transform: scale(1.025);
+}
+
+.gear-elevator-image-label {
+    position: absolute;
+    bottom: 22px;
+    left: 22px;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 12px 15px;
+    background: rgba(255, 255, 255, 0.94);
+
+    color: #45463f;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+.gear-label-line {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--gear-accent);
+}
+
+.gear-elevator-image-caption {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+
+    margin-top: 19px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #deddd6;
+
+    color: #6c6d66;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.gear-caption-number {
+    color: var(--gear-accent);
+    font-size: 13px;
+}
+
+/* =====================================
+   CONTENT
+===================================== */
+
+.gear-elevator-content {
+    min-width: 0;
+}
+
+.gear-elevator-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    margin-bottom: 24px;
+
+    color: #987942;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 3px;
+}
+
+.gear-elevator-eyebrow span {
+    width: 29px;
+    height: 2px;
+    background: var(--gear-accent);
+}
+
+.gear-elevator-title {
+    margin: 0 0 23px;
+
+    font-size: clamp(40px, 5vw, 65px);
+    font-weight: 600;
+    letter-spacing: -2px;
+    line-height: 1.02;
+}
+
+.gear-elevator-title span {
+    display: block;
+    color: var(--gear-accent);
+}
+
+.gear-elevator-description {
+    margin: 0;
+
+    color: var(--gear-muted);
+    font-size: 14px;
+    line-height: 2;
+}
+
+.gear-elevator-divider {
+    width: 100%;
+    height: 1px;
+    margin: 30px 0;
+
+    background: #deddd6;
+}
+
+/* =====================================
+   FEATURES
+===================================== */
+
+.gear-elevator-features {
+    display: flex;
+    flex-direction: column;
+}
+
+.gear-feature {
+    display: grid;
+    grid-template-columns: 38px minmax(0, 1fr);
+    gap: 16px;
+
+    padding: 20px 0;
+    border-bottom: 1px solid #e4e2db;
+}
+
+.gear-feature:first-child {
+    padding-top: 0;
+}
+
+.gear-feature:last-child {
+    border-bottom: none;
+}
+
+.gear-feature-number {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+
+    padding-top: 3px;
+
+    color: var(--gear-accent);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.gear-feature h3 {
+    margin: 0 0 8px;
+
+    color: #292a25;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.gear-feature p {
+    margin: 0;
+
+    color: var(--gear-muted);
+    font-size: 12px;
+    line-height: 1.9;
+}
+
+/* =====================================
+   FOOTER
+===================================== */
+
+.gear-elevator-footer {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    margin-top: 28px;
+
+    color: #777870;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    line-height: 1.8;
+}
+
+.gear-footer-mark {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    width: 32px;
+    height: 32px;
+
+    border: 1px solid var(--gear-accent);
+
+    color: #9a7b43;
+    font-family: Georgia, serif;
+    font-size: 19px;
+}
+
+/* =====================================
+   TABLET
+===================================== */
+
+@media (max-width: 1000px) {
+    .gear-elevator-section {
+        padding: 70px 22px;
+    }
+
+    .gear-elevator-container {
+        gap: 40px;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+
+    .gear-elevator-image-wrapper,
+    .gear-elevator-image {
+        height: 420px;
+        min-height: 420px;
+    }
+
+    .gear-elevator-title {
+        font-size: clamp(38px, 5vw, 52px);
+    }
+
+    .gear-elevator-description {
+        font-size: 13px;
+    }
+}
+
+/* =====================================
+   MOBILE
+===================================== */
+
+@media (max-width: 700px) {
+    .gear-elevator-section {
+        padding: 55px 18px;
+    }
+
+    .gear-elevator-container {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 40px;
+    }
+
+    .gear-elevator-image-wrapper,
+    .gear-elevator-image {
+        height: 380px;
+        min-height: 380px;
+    }
+
+    .gear-elevator-title {
+        font-size: clamp(42px, 9vw, 58px);
+    }
+
+    .gear-elevator-description {
+        font-size: 13px;
+        line-height: 1.9;
+    }
+
+    .gear-elevator-divider {
+        margin: 24px 0;
+    }
+
+    .gear-feature {
+        padding: 18px 0;
+    }
+}
+
+/* =====================================
+   SMALL MOBILE
+===================================== */
+
+@media (max-width: 400px) {
+    .gear-elevator-section {
+        padding: 42px 14px;
+    }
+
+    .gear-elevator-image-wrapper,
+    .gear-elevator-image {
+        height: 320px;
+        min-height: 320px;
+    }
+
+    .gear-elevator-image-label {
+        bottom: 12px;
+        left: 12px;
+        padding: 10px;
+        font-size: 8px;
+    }
+
+    .gear-elevator-title {
+        font-size: 39px;
+    }
+
+    .gear-elevator-eyebrow {
+        font-size: 9px;
+    }
+
+    .gear-elevator-footer {
+        font-size: 8px;
+    }
+}
+
+/* ACCESSIBILITY */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .gear-elevator-section *,
+    .gear-elevator-section *::before,
+    .gear-elevator-section *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}

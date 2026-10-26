@@ -1,0 +1,336 @@
+/* ===========================
+   SERVICES SECTION
+=========================== */
+
+.services-section {
+    padding: 110px 6%;
+    background: #f8f8f6;
+    color: #171717;
+    font-family: inherit;
+}
+
+.services-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* ===========================
+   SECTION HEADING
+=========================== */
+
+.services-heading {
+    max-width: 760px;
+    margin: 0 auto 65px;
+    text-align: center;
+}
+
+.services-eyebrow {
+    display: inline-block;
+    margin-bottom: 18px;
+    color: #b38b3c;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+}
+
+.services-heading h2 {
+    margin: 0 0 22px;
+    font-size: clamp(34px, 4vw, 55px);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -1.5px;
+}
+
+.services-heading h2 span {
+    color: #b38b3c;
+}
+
+.services-heading>p {
+    max-width: 650px;
+    margin: 0 auto;
+    color: #707070;
+    font-size: 15px;
+    line-height: 1.9;
+}
+
+/* ===========================
+   SERVICES GRID
+=========================== */
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.service-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 300px;
+    padding: 32px;
+    overflow: hidden;
+    background: #ffffff;
+    border: 1px solid #e9e6df;
+    border-radius: 5px;
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.service-card::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: #cca34d;
+    content: '';
+    transition: width 0.3s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-7px);
+    border-color: #cca34d;
+    box-shadow: 0 18px 45px rgb(0 0 0 / 7%);
+}
+
+.service-card:hover::before {
+    width: 100%;
+}
+
+/* ===========================
+   CARD TOP
+=========================== */
+
+.service-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 32px;
+}
+
+.service-number {
+    color: #b38b3c;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.service-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    color: #cca34d;
+    background: #f8f4e9;
+    border: 1px solid #eee5cf;
+    border-radius: 50%;
+    font-size: 25px;
+    transition:
+        color 0.3s ease,
+        background 0.3s ease;
+}
+
+.service-card:hover .service-icon {
+    color: #ffffff;
+    background: #cca34d;
+}
+
+/* ===========================
+   CARD CONTENT
+=========================== */
+
+.service-card h3 {
+    margin: 0 0 14px;
+    color: #202020;
+    font-size: 21px;
+    font-weight: 650;
+    line-height: 1.4;
+}
+
+.service-card>p {
+    margin: 0 0 25px;
+    color: #777777;
+    font-size: 14px;
+    line-height: 1.9;
+}
+
+/* ===========================
+   CARD LINK
+=========================== */
+
+.service-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    width: fit-content;
+    margin-top: auto;
+    color: #222222;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.service-link span {
+    color: #b38b3c;
+    font-size: 17px;
+    transition: transform 0.3s ease;
+}
+
+.service-link:hover {
+    color: #b38b3c;
+}
+
+.service-link:hover span {
+    transform: translate(4px, -2px);
+}
+
+/* ===========================
+   CALL TO ACTION
+=========================== */
+
+.services-cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    margin-top: 65px;
+    padding: 40px 45px;
+    color: #ffffff;
+    background: #191919;
+    border-left: 4px solid #cca34d;
+    border-radius: 4px;
+}
+
+.services-cta-label {
+    display: inline-block;
+    margin-bottom: 12px;
+    color: #cca34d;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.services-cta h3 {
+    margin: 0 0 12px;
+    font-size: clamp(22px, 2.5vw, 30px);
+    line-height: 1.4;
+}
+
+.services-cta p {
+    margin: 0;
+    color: #c0c0c0;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.services-cta-button {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    min-height: 50px;
+    padding: 0 24px;
+    color: #151515;
+    background: #cca34d;
+    border: 1px solid #cca34d;
+    border-radius: 3px;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    transition:
+        color 0.3s ease,
+        background 0.3s ease;
+}
+
+.services-cta-button:hover {
+    color: #ffffff;
+    background: transparent;
+}
+
+.services-cta-button span {
+    font-size: 18px;
+}
+
+/* ===========================
+   RESPONSIVE DESIGN
+=========================== */
+
+@media (max-width: 1000px) {
+    .services-section {
+        padding: 85px 5%;
+    }
+
+    .services-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .services-cta {
+        padding: 32px;
+    }
+}
+
+@media (max-width: 600px) {
+    .services-section {
+        padding: 65px 5%;
+    }
+
+    .services-heading {
+        margin-bottom: 40px;
+    }
+
+    .services-heading h2 {
+        letter-spacing: -0.8px;
+    }
+
+    .services-heading>p {
+        font-size: 14px;
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .service-card {
+        min-height: 280px;
+        padding: 25px;
+    }
+
+    .service-card-top {
+        margin-bottom: 25px;
+    }
+
+    .services-cta {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 25px;
+        margin-top: 40px;
+        padding: 28px 23px;
+    }
+
+    .services-cta-button {
+        width: 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .service-card,
+    .service-card::before,
+    .service-icon,
+    .service-link,
+    .service-link span,
+    .services-cta-button {
+        transition: none;
+    }
+
+    .service-card:hover {
+        transform: none;
+    }
+}

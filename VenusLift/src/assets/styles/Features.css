@@ -1,13 +1,24 @@
 /* ===========================
    FEATURES SECTION
+   Cards overlap the bottom of the hero by --features-overlap
    =========================== */
+
+:root {
+  --features-overlap: 70px;
+}
 
 .features-section {
   position: relative;
-  background-color: #ebe8e8;
-  padding: 0 0 48px 0;
-  margin-top: -1px;
   z-index: 10;
+  /* pull the whole section up so the cards sit over the hero */
+  margin-top: calc(var(--features-overlap) * -1);
+  padding: 0 0 48px 0;
+  /* transparent over the hero, grey below the overlap line */
+  background: linear-gradient(
+    to bottom,
+    transparent var(--features-overlap),
+    #ebe8e8 var(--features-overlap)
+  );
 }
 
 
@@ -26,7 +37,6 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
-  transform: translateY(-40px);
 }
 
 
@@ -37,104 +47,55 @@
 .feature-card {
   position: relative;
   background-color: #ffffff;
-
   border: 1px solid #e5e5e5;
   border-radius: 16px;
-
   padding: 28px 24px;
-
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 16px;
-
   overflow: hidden;
-
+  cursor: default;
+  box-shadow: 0 16px 36px -12px rgba(0, 0, 0, 0.35);
   transition:
     transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
     border-color 0.5s ease,
     box-shadow 0.5s ease;
-
-  animation: cardFadeIn 0.6s ease-out both;
-
-  cursor: default;
+  /* "backwards" (not "both") so the hover transform isn't overridden after the entrance */
+  animation: cardFadeIn 0.6s ease-out backwards;
 }
-
-
-/* ===========================
-   CARD HOVER
-   =========================== */
 
 .feature-card:hover {
   transform: translateY(-8px);
-
   border-color: rgba(176, 141, 44, 0.35);
-
   box-shadow:
-    0 20px 40px rgba(0, 0, 0, 0.10),
-    0 0 60px rgba(176, 141, 44, 0.08);
+    0 24px 48px rgba(0, 0, 0, 0.18),
+    0 0 60px rgba(176, 141, 44, 0.10);
 }
-
-
-/* ===========================
-   ICON WRAPPER
-   =========================== */
 
 .feature-icon-wrap {
   width: 56px;
   height: 56px;
-
   border-radius: 14px;
-
-  background: linear-gradient(
-    145deg,
-    rgba(212, 175, 55, 0.14) 0%,
-    rgba(212, 175, 55, 0.05) 100%
-  );
-
+  background: linear-gradient(145deg, rgba(212, 175, 55, 0.14) 0%, rgba(212, 175, 55, 0.05) 100%);
   border: 1px solid rgba(176, 141, 44, 0.20);
-
   display: flex;
   align-items: center;
   justify-content: center;
-
-  transition:
-    background 0.5s ease,
-    border-color 0.5s ease,
-    transform 0.5s ease;
-
   flex-shrink: 0;
+  transition: background 0.5s ease, border-color 0.5s ease, transform 0.5s ease;
 }
-
-
-/* ===========================
-   ICON
-   =========================== */
 
 .feature-icon {
   width: 26px;
   height: 26px;
-
   color: #b08d2c;
-
-  transition:
-    color 0.5s ease,
-    transform 0.5s ease;
+  transition: color 0.5s ease, transform 0.5s ease;
 }
-
-
-/* ===========================
-   ICON HOVER
-   =========================== */
 
 .feature-card:hover .feature-icon-wrap {
   border-color: rgba(176, 141, 44, 0.45);
-
-  background: linear-gradient(
-    145deg,
-    rgba(212, 175, 55, 0.20) 0%,
-    rgba(212, 175, 55, 0.08) 100%
-  );
+  background: linear-gradient(145deg, rgba(212, 175, 55, 0.20) 0%, rgba(212, 175, 55, 0.08) 100%);
 }
 
 .feature-card:hover .feature-icon {
@@ -142,77 +103,41 @@
   transform: scale(1.1);
 }
 
-
-/* ===========================
-   TEXT CONTAINER
-   =========================== */
-
 .feature-text {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-
-/* ===========================
-   FEATURE TITLE
-   =========================== */
-
 .feature-title {
+  margin: 0;
   font-size: 15px;
   font-weight: 600;
-
   letter-spacing: 0.08em;
-
   color: #171717;
-
   font-family: "Inter", sans-serif;
-
   line-height: 1.4;
 }
 
-
-/* ===========================
-   FEATURE DESCRIPTION
-   =========================== */
-
 .feature-desc {
+  margin: 0;
   font-size: 13px;
   font-weight: 400;
-
   line-height: 1.65;
-
   color: #666666;
-
   font-family: "Inter", sans-serif;
 }
 
-
-/* ===========================
-   HOVER GLOW
-   =========================== */
-
 .feature-glow {
   position: absolute;
-
   top: -30px;
   right: -30px;
-
   width: 120px;
   height: 120px;
-
-  background: radial-gradient(
-    circle,
-    rgba(212, 175, 55, 0.12) 0%,
-    transparent 70%
-  );
-
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.12) 0%, transparent 70%);
   border-radius: 50%;
-
   pointer-events: none;
-
   opacity: 0;
-
   transition: opacity 0.6s ease;
 }
 
@@ -220,31 +145,15 @@
   opacity: 1;
 }
 
-
-/* ===========================
-   BOTTOM GOLD ACCENT
-   =========================== */
-
 .feature-card::after {
   content: "";
-
   position: absolute;
-
   bottom: 0;
   left: 24px;
   right: 24px;
-
   height: 2px;
-
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(176, 141, 44, 0.65),
-    transparent
-  );
-
+  background: linear-gradient(90deg, transparent, rgba(176, 141, 44, 0.65), transparent);
   transform: scaleX(0);
-
   transition: transform 0.5s ease;
 }
 
@@ -259,151 +168,70 @@
 
 .features-mobile {
   display: none;
-
   position: relative;
-
   overflow: hidden;
-
-  padding: 0 0 8px 0;
 }
-
-
-/* ===========================
-   MOBILE SCROLL TRACK
-   =========================== */
 
 .features-scroll-track {
   display: flex;
-
   gap: 16px;
-
   overflow-x: auto;
-
   scrollbar-width: none;
-
   -ms-overflow-style: none;
-
-  padding: 0 20px;
-
+  /* bottom padding keeps card shadows from being clipped */
+  padding: 0 20px 24px;
   scroll-behavior: auto;
-
-  will-change: scroll-left;
 }
 
 .features-scroll-track::-webkit-scrollbar {
   display: none;
 }
 
-
-/* ===========================
-   MOBILE FEATURE CARD
-   =========================== */
-
 .feature-card-mobile {
   position: relative;
-
   min-width: 260px;
   max-width: 260px;
-
-  background: linear-gradient(
-    145deg,
-    #ffffff 0%,
-    #f8f8f8 100%
-  );
-
+  background: linear-gradient(145deg, #ffffff 0%, #f8f8f8 100%);
   border: 1px solid #e3e3e3;
-
   border-radius: 16px;
-
   padding: 24px 20px;
-
   display: flex;
   flex-direction: column;
-
   gap: 14px;
-
   overflow: hidden;
-
   flex-shrink: 0;
-
-  transition:
-    transform 0.4s ease,
-    border-color 0.4s ease,
-    box-shadow 0.4s ease;
+  box-shadow: 0 14px 30px -12px rgba(0, 0, 0, 0.35);
+  transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
 }
-
-
-/* ===========================
-   MOBILE CARD HOVER
-   =========================== */
 
 .feature-card-mobile:hover {
   transform: translateY(-4px);
-
   border-color: rgba(176, 141, 44, 0.30);
-
-  box-shadow:
-    0 12px 30px rgba(0, 0, 0, 0.08),
-    0 0 30px rgba(176, 141, 44, 0.05);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12), 0 0 30px rgba(176, 141, 44, 0.06);
 }
-
-
-/* ===========================
-   MOBILE ICON WRAPPER
-   =========================== */
 
 .feature-icon-wrap-mobile {
   width: 48px;
   height: 48px;
-
   border-radius: 12px;
-
-  background: linear-gradient(
-    145deg,
-    rgba(212, 175, 55, 0.14) 0%,
-    rgba(212, 175, 55, 0.05) 100%
-  );
-
+  background: linear-gradient(145deg, rgba(212, 175, 55, 0.14) 0%, rgba(212, 175, 55, 0.05) 100%);
   border: 1px solid rgba(176, 141, 44, 0.20);
-
   display: flex;
   align-items: center;
   justify-content: center;
-
-  transition:
-    background 0.4s ease,
-    border-color 0.4s ease;
+  transition: background 0.4s ease, border-color 0.4s ease;
 }
-
-
-/* ===========================
-   MOBILE ICON
-   =========================== */
 
 .feature-icon-mobile {
   width: 22px;
   height: 22px;
-
   color: #b08d2c;
-
-  transition:
-    color 0.4s ease,
-    transform 0.4s ease;
+  transition: color 0.4s ease, transform 0.4s ease;
 }
-
-
-/* ===========================
-   MOBILE ICON HOVER
-   =========================== */
 
 .feature-card-mobile:hover .feature-icon-wrap-mobile {
   border-color: rgba(176, 141, 44, 0.40);
-
-  background: linear-gradient(
-    145deg,
-    rgba(212, 175, 55, 0.20) 0%,
-    rgba(212, 175, 55, 0.08) 100%
-  );
+  background: linear-gradient(145deg, rgba(212, 175, 55, 0.20) 0%, rgba(212, 175, 55, 0.08) 100%);
 }
 
 .feature-card-mobile:hover .feature-icon-mobile {
@@ -411,92 +239,45 @@
   transform: scale(1.08);
 }
 
-
-/* ===========================
-   MOBILE TITLE
-   =========================== */
-
 .feature-title-mobile {
+  margin: 0;
   font-size: 13px;
-
   font-weight: 600;
-
   letter-spacing: 0.08em;
-
   color: #171717;
-
   font-family: "Inter", sans-serif;
-
   line-height: 1.4;
 }
 
-
-/* ===========================
-   MOBILE DESCRIPTION
-   =========================== */
-
 .feature-desc-mobile {
+  margin: 0;
   font-size: 12px;
-
   font-weight: 400;
-
   line-height: 1.6;
-
   color: #666666;
-
   font-family: "Inter", sans-serif;
 }
 
-
-/* ===========================
-   MOBILE GLOW
-   =========================== */
-
 .feature-glow-mobile {
   position: absolute;
-
   top: -20px;
   right: -20px;
-
   width: 80px;
   height: 80px;
-
-  background: radial-gradient(
-    circle,
-    rgba(212, 175, 55, 0.10) 0%,
-    transparent 70%
-  );
-
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.10) 0%, transparent 70%);
   border-radius: 50%;
-
   pointer-events: none;
 }
 
-
-/* ===========================
-   MOBILE BOTTOM ACCENT
-   =========================== */
-
 .feature-card-mobile::after {
   content: "";
-
   position: absolute;
-
   bottom: 0;
   left: 20px;
   right: 20px;
-
   height: 2px;
-
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(176, 141, 44, 0.55),
-    transparent
-  );
-
+  background: linear-gradient(90deg, transparent, rgba(176, 141, 44, 0.55), transparent);
   transform: scaleX(0);
-
   transition: transform 0.4s ease;
 }
 
@@ -504,45 +285,10 @@
   transform: scaleX(1);
 }
 
-
-/* ===========================
-   FADE EDGES
-   =========================== */
-
+/* no edge fading: cards stay fully opaque to the screen edges */
 .scroll-fade-left,
 .scroll-fade-right {
-  position: absolute;
-
-  top: 0;
-  bottom: 8px;
-
-  width: 40px;
-
-  pointer-events: none;
-
-  z-index: 2;
-}
-
-
-.scroll-fade-left {
-  left: 0;
-
-  background: linear-gradient(
-    90deg,
-    #cccbcb 0%,
-    rgba(204, 203, 203, 0) 100%
-  );
-}
-
-
-.scroll-fade-right {
-  right: 0;
-
-  background: linear-gradient(
-    -90deg,
-    #cccbcb 0%,
-    rgba(204, 203, 203, 0) 100%
-  );
+  display: none;
 }
 
 
@@ -551,15 +297,8 @@
    =========================== */
 
 @keyframes cardFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 
@@ -567,89 +306,34 @@
    RESPONSIVE
    =========================== */
 
-@media (max-width: 1023px) {
-
-  .features-desktop {
-    display: none;
-  }
-
-  .features-mobile {
-    display: block;
-
-    padding-top: 32px;
-  }
-
-  .features-section {
-    padding-bottom: 32px;
-  }
-
-  .feature-card-mobile {
-    min-width: 240px;
-    max-width: 240px;
-  }
-}
-
-
-/* ===========================
-   SMALL MOBILE
-   =========================== */
-
-@media (max-width: 480px) {
-
-  .features-scroll-track {
-    gap: 12px;
-
-    padding: 0 16px;
-  }
-
-  .feature-card-mobile {
-    min-width: 220px;
-    max-width: 220px;
-
-    padding: 20px 16px;
-  }
-
-  .feature-icon-wrap-mobile {
-    width: 42px;
-    height: 42px;
-  }
-
-  .feature-icon-mobile {
-    width: 20px;
-    height: 20px;
-  }
-
-  .feature-title-mobile {
-    font-size: 12px;
-  }
-
-  .feature-desc-mobile {
-    font-size: 11px;
-  }
-}
-
-
-/* ===========================
-   TABLET / SMALL DESKTOP
-   =========================== */
-
+/* Tablet / small desktop */
 @media (min-width: 1024px) and (max-width: 1279px) {
+  .features-grid { gap: 16px; }
+  .feature-card { padding: 24px 20px; }
+  .feature-title { font-size: 14px; }
+  .feature-desc { font-size: 12px; }
+}
 
-  .features-grid {
-    gap: 16px;
-  }
+/* Tablets & phones: swap grid for the scrolling strip */
+@media (max-width: 1023px) {
+  :root { --features-overlap: 56px; }
 
-  .feature-card {
-    padding: 24px 20px;
-  }
+  .features-desktop { display: none; }
+  .features-mobile { display: block; }
+  .features-section { padding-bottom: 16px; }
+  .feature-card-mobile { min-width: 240px; max-width: 240px; }
+}
 
-  .feature-title {
-    font-size: 14px;
-  }
+/* Small phones */
+@media (max-width: 480px) {
+  :root { --features-overlap: 48px; }
 
-  .feature-desc {
-    font-size: 12px;
-  }
+  .features-scroll-track { gap: 12px; padding: 0 16px 24px; }
+  .feature-card-mobile { min-width: 220px; max-width: 220px; padding: 20px 16px; }
+  .feature-icon-wrap-mobile { width: 42px; height: 42px; }
+  .feature-icon-mobile { width: 20px; height: 20px; }
+  .feature-title-mobile { font-size: 12px; }
+  .feature-desc-mobile { font-size: 11px; }
 }
 
 
@@ -658,7 +342,6 @@
    =========================== */
 
 @media (prefers-reduced-motion: reduce) {
-
   .feature-card,
   .feature-card-mobile,
   .feature-icon,
@@ -670,9 +353,5 @@
   .feature-card-mobile::after {
     animation: none;
     transition: none;
-  }
-
-  .features-scroll-track {
-    scroll-behavior: auto;
   }
 }

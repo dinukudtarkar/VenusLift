@@ -1,0 +1,91 @@
+.floating-call-button {
+    position: fixed;
+    right: 25px;
+    bottom: 25px;
+    z-index: 9999;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 12px 22px 12px 14px;
+
+    color: #ffffff;
+    background: linear-gradient(135deg, #cca34d, #a77c2d);
+
+    border: 1px solid rgb(255 255 255 / 25%);
+    border-radius: 50px;
+
+    text-decoration: none;
+    box-shadow: 0 8px 25px rgb(0 0 0 / 22%);
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.floating-call-button:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgb(0 0 0 / 30%);
+}
+
+.floating-call-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 45px;
+    height: 45px;
+    flex-shrink: 0;
+
+    color: #cca34d;
+    background: #ffffff;
+    border-radius: 50%;
+}
+
+.floating-call-text {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.floating-call-label {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+}
+
+.floating-call-title {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+/* Mobile responsive */
+@media (max-width: 600px) {
+    .floating-call-button {
+        right: 16px;
+        bottom: 20px;
+        gap: 9px;
+        padding: 9px 17px 9px 10px;
+    }
+
+    .floating-call-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .floating-call-title {
+        font-size: 14px;
+    }
+
+    .floating-call-label {
+        font-size: 8px;
+    }
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    .floating-call-button {
+        transition: none;
+    }
+}

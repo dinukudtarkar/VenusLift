@@ -1,0 +1,486 @@
+
+
+.customer-responsibilities {
+  --responsibilities-gold: #c9a45c;
+  --responsibilities-dark: #171717;
+  --responsibilities-text: #666666;
+  --responsibilities-border: #e7e4dd;
+
+  width: 100%;
+  padding: 100px 24px;
+  background: #f8f8f6;
+  color: var(--responsibilities-dark);
+  font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
+}
+
+.customer-responsibilities *,
+.customer-responsibilities *::before,
+.customer-responsibilities *::after {
+  box-sizing: border-box;
+}
+
+.responsibilities-container {
+  width: 100%;
+  max-width: 1050px;
+  margin: 0 auto;
+}
+
+/* HEADER */
+
+.responsibilities-header {
+  max-width: 780px;
+  margin: 0 auto 55px;
+  text-align: center;
+}
+
+.responsibilities-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 22px;
+
+  color: #9c793a;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+}
+
+.responsibilities-eyebrow-line {
+  width: 30px;
+  height: 2px;
+  background: var(--responsibilities-gold);
+}
+
+.responsibilities-title {
+  margin: 0 0 22px;
+  color: var(--responsibilities-dark);
+
+  font-size: clamp(34px, 4.5vw, 52px);
+  font-weight: 600;
+  letter-spacing: -1.8px;
+  line-height: 1.2;
+}
+
+.responsibilities-title span {
+  display: block;
+  margin-top: 5px;
+  color: #a98645;
+}
+
+.responsibilities-intro {
+  max-width: 720px;
+  margin: 0 auto;
+
+  color: var(--responsibilities-text);
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+/* INFORMATION BOX */
+
+.responsibilities-summary {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+
+  margin-top: 28px;
+  padding: 17px 20px;
+
+  text-align: left;
+  background: #f0ece2;
+  border-left: 3px solid var(--responsibilities-gold);
+}
+
+.responsibilities-summary-icon {
+  display: flex;
+  flex: 0 0 21px;
+  align-items: center;
+  justify-content: center;
+
+  width: 21px;
+  height: 21px;
+  border: 1px solid #b79a60;
+  border-radius: 50%;
+
+  color: #987739;
+  font-family: Georgia, serif;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.responsibilities-summary p {
+  margin: 0;
+  color: #5f5b53;
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+/* ACCORDION LIST */
+
+.responsibilities-list {
+  border-top: 1px solid var(--responsibilities-border);
+}
+
+.responsibility-group {
+  margin: 0;
+  background: #ffffff;
+  border: 1px solid var(--responsibilities-border);
+  border-top: none;
+}
+
+.responsibility-group[open] {
+  background: #ffffff;
+}
+
+.responsibility-summary {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) 32px;
+  align-items: center;
+  gap: 18px;
+
+  padding: 25px 27px;
+  cursor: pointer;
+  list-style: none;
+
+  transition: background 0.25s ease;
+}
+
+.responsibility-summary::-webkit-details-marker {
+  display: none;
+}
+
+.responsibility-summary::marker {
+  content: "";
+}
+
+.responsibility-summary:hover {
+  background: #fbfaf7;
+}
+
+.responsibility-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 43px;
+  height: 43px;
+
+  background: #f5f0e5;
+  color: #a17e3d;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.responsibility-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.responsibility-group-title {
+  color: #242424;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.responsibility-group-description {
+  color: #858585;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.responsibility-toggle {
+  position: relative;
+  display: block;
+
+  width: 30px;
+  height: 30px;
+
+  border: 1px solid #e6e0d3;
+  border-radius: 50%;
+}
+
+.responsibility-toggle::before,
+.responsibility-toggle::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  width: 10px;
+  height: 1px;
+
+  background: #a98645;
+  content: "";
+  transform: translate(-50%, -50%);
+}
+
+.responsibility-toggle::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+  transition: transform 0.2s ease;
+}
+
+.responsibility-group[open] .responsibility-toggle {
+  background: #f5f0e5;
+}
+
+.responsibility-group[open] .responsibility-toggle::after {
+  transform: translate(-50%, -50%) rotate(0deg);
+}
+
+/* ACCORDION CONTENT */
+
+.responsibility-details {
+  padding: 0 35px 27px 93px;
+  animation: responsibilitiesFadeIn 0.25s ease;
+}
+
+.responsibility-details ul {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.responsibility-details li {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr);
+  align-items: start;
+  gap: 12px;
+
+  color: #626262;
+  font-size: 13px;
+  line-height: 1.85;
+}
+
+.responsibility-check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+
+  background: #f5f0e5;
+  color: #a17e3d;
+
+  font-size: 10px;
+  font-weight: 700;
+}
+
+@keyframes responsibilitiesFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* FOOTER CTA */
+
+.responsibilities-footer {
+  display: grid;
+  grid-template-columns: 55px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 22px;
+
+  margin-top: 35px;
+  padding: 30px;
+
+  background: var(--responsibilities-dark);
+  color: #ffffff;
+}
+
+.responsibilities-footer-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 52px;
+  height: 52px;
+
+  border: 1px solid var(--responsibilities-gold);
+  color: var(--responsibilities-gold);
+
+  font-family: Georgia, serif;
+  font-size: 19px;
+  letter-spacing: 1px;
+}
+
+.responsibilities-footer-content h3 {
+  margin: 0 0 8px;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.responsibilities-footer-content p {
+  max-width: 480px;
+  margin: 0;
+
+  color: #bcbcbc;
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.responsibilities-contact {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+
+  min-height: 47px;
+  padding: 0 17px;
+
+  border: 1px solid var(--responsibilities-gold);
+  color: #ffffff;
+  text-decoration: none;
+  white-space: nowrap;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  transition:
+    background 0.25s ease,
+    color 0.25s ease;
+}
+
+.responsibilities-contact span {
+  color: var(--responsibilities-gold);
+  font-size: 16px;
+}
+
+.responsibilities-contact:hover {
+  background: var(--responsibilities-gold);
+  color: #151515;
+}
+
+.responsibilities-contact:hover span {
+  color: #151515;
+}
+
+/* TABLET */
+
+@media (max-width: 900px) {
+  .customer-responsibilities {
+    padding: 75px 24px;
+  }
+
+  .responsibilities-footer {
+    grid-template-columns: 50px minmax(0, 1fr);
+  }
+
+  .responsibilities-contact {
+    grid-column: 2;
+    justify-self: start;
+  }
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+  .customer-responsibilities {
+    padding: 55px 16px;
+  }
+
+  .responsibilities-header {
+    margin-bottom: 35px;
+  }
+
+  .responsibilities-title {
+    font-size: clamp(31px, 8vw, 40px);
+    letter-spacing: -1px;
+  }
+
+  .responsibilities-intro {
+    font-size: 13px;
+    line-height: 1.85;
+  }
+
+  .responsibilities-summary {
+    padding: 14px;
+  }
+
+  .responsibility-summary {
+    grid-template-columns: 36px minmax(0, 1fr) 28px;
+    gap: 12px;
+    padding: 19px 14px;
+  }
+
+  .responsibility-number {
+    width: 35px;
+    height: 35px;
+    font-size: 11px;
+  }
+
+  .responsibility-group-title {
+    font-size: 14px;
+  }
+
+  .responsibility-group-description {
+    font-size: 11px;
+  }
+
+  .responsibility-toggle {
+    width: 27px;
+    height: 27px;
+  }
+
+  .responsibility-details {
+    padding: 0 17px 23px 20px;
+  }
+
+  .responsibility-details ul {
+    gap: 14px;
+  }
+
+  .responsibility-details li {
+    gap: 9px;
+    font-size: 12px;
+    line-height: 1.8;
+  }
+
+  .responsibilities-footer {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding: 23px 19px;
+  }
+
+  .responsibilities-footer-mark {
+    width: 46px;
+    height: 46px;
+  }
+
+  .responsibilities-footer-content h3 {
+    font-size: 15px;
+  }
+
+  .responsibilities-contact {
+    grid-column: auto;
+    justify-self: start;
+  }
+}
+
+/* REDUCED MOTION */
+
+@media (prefers-reduced-motion: reduce) {
+  .customer-responsibilities *,
+  .customer-responsibilities *::before,
+  .customer-responsibilities *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

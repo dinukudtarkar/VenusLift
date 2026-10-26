@@ -1,0 +1,468 @@
+/* ==========================================
+   VENUS LIFTS - SPECIAL PURPOSE ELEVATORS
+========================================== */
+
+.special-lifts-section {
+    --special-accent: #b79659;
+    --special-text: #242520;
+    --special-muted: #777870;
+    --special-border: #e2e0d8;
+
+    width: 100%;
+    padding: 90px 24px;
+    overflow: hidden;
+    background: #f8f8f6;
+    color: var(--special-text);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.special-lifts-section *,
+.special-lifts-section *::before,
+.special-lifts-section *::after {
+    box-sizing: border-box;
+}
+
+/* ==========================================
+   SECTION HEADER
+========================================== */
+
+.special-lifts-header {
+    max-width: 700px;
+    margin: 0 auto 75px;
+    text-align: center;
+}
+
+.special-lifts-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 20px;
+
+    color: #987942;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 3px;
+}
+
+.special-lifts-eyebrow span {
+    display: block;
+    width: 26px;
+    height: 1px;
+    background: var(--special-accent);
+}
+
+.special-lifts-header h2 {
+    margin: 0 0 18px;
+
+    font-size: clamp(34px, 4vw, 52px);
+    font-weight: 600;
+    letter-spacing: -1.5px;
+    line-height: 1.15;
+}
+
+.special-lifts-header h2 span {
+    color: var(--special-accent);
+}
+
+.special-lifts-header>p {
+    max-width: 570px;
+    margin: 0 auto;
+
+    color: var(--special-muted);
+    font-size: 14px;
+    line-height: 1.9;
+}
+
+/* ==========================================
+   LIFT LIST
+========================================== */
+
+.special-lifts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
+
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* ==========================================
+   INDIVIDUAL LIFT CARD
+========================================== */
+
+.special-lift-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.92fr);
+    align-items: center;
+    gap: 75px;
+}
+
+.special-lift-reverse {
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1fr);
+}
+
+.special-lift-reverse .special-lift-visual {
+    order: 2;
+}
+
+.special-lift-reverse .special-lift-content {
+    order: 1;
+}
+
+/* ==========================================
+   IMAGE
+========================================== */
+
+.special-lift-visual,
+.special-lift-content {
+    min-width: 0;
+}
+
+.special-lift-image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 460px;
+    overflow: hidden;
+
+    border: 1px solid var(--special-border);
+    background: #eae9e4;
+}
+
+.special-lift-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    object-position: center;
+
+    transition: transform 0.6s ease;
+}
+
+.special-lift-image-wrapper:hover .special-lift-image {
+    transform: scale(1.035);
+}
+
+/* IMAGE BADGE */
+
+.special-lift-image-badge {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 11px 14px;
+    background: rgba(255, 255, 255, 0.95);
+
+    color: #55564e;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+.special-lift-image-badge span:first-child {
+    color: var(--special-accent);
+    font-size: 15px;
+}
+
+.special-lift-badge-line {
+    width: 20px;
+    height: 1px;
+    background: var(--special-accent);
+}
+
+/* IMAGE CAPTION */
+
+.special-lift-image-caption {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    margin-top: 18px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--special-border);
+
+    color: #6c6d66;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.6px;
+}
+
+.special-lift-caption-mark {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    width: 28px;
+    height: 28px;
+    border: 1px solid var(--special-accent);
+
+    color: #9a7b43;
+    font-family: Georgia, serif;
+    font-size: 17px;
+}
+
+/* ==========================================
+   CONTENT
+========================================== */
+
+.special-lift-category {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    margin-bottom: 22px;
+
+    color: #987942;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+}
+
+.special-lift-category>span {
+    width: 28px;
+    height: 2px;
+    background: var(--special-accent);
+}
+
+.special-lift-title {
+    margin: 0 0 22px;
+
+    font-size: clamp(42px, 4.5vw, 62px);
+    font-weight: 600;
+    letter-spacing: -1.8px;
+    line-height: 1.05;
+}
+
+.special-lift-title span {
+    display: block;
+    color: var(--special-accent);
+}
+
+.special-lift-description {
+    margin: 0;
+
+    color: var(--special-muted);
+    font-size: 14px;
+    line-height: 2;
+}
+
+.special-lift-divider {
+    width: 100%;
+    height: 1px;
+    margin: 28px 0;
+
+    background: var(--special-border);
+}
+
+/* ==========================================
+   FEATURES
+========================================== */
+
+.special-lift-features-heading {
+    margin: 0 0 20px;
+
+    color: #34352f;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.special-lift-features {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.special-lift-features li {
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+
+    color: #62635c;
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+.special-lift-check {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    width: 20px;
+    height: 20px;
+
+    border: 1px solid #d9c9a9;
+    border-radius: 50%;
+
+    color: #987942;
+    font-size: 11px;
+}
+
+/* ==========================================
+   FOOTER
+========================================== */
+
+.special-lift-footer {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    margin-top: 30px;
+
+    color: #777870;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    line-height: 1.8;
+}
+
+.special-lift-footer-mark {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--special-accent);
+
+    color: #9a7b43;
+    font-family: Georgia, serif;
+    font-size: 19px;
+}
+
+/* ==========================================
+   TABLET
+========================================== */
+
+@media (max-width: 1000px) {
+    .special-lifts-section {
+        padding: 70px 22px;
+    }
+
+    .special-lifts-list {
+        gap: 75px;
+    }
+
+    .special-lift-card {
+        gap: 38px;
+    }
+
+    .special-lift-image-wrapper {
+        height: 380px;
+    }
+
+    .special-lift-title {
+        font-size: clamp(36px, 4vw, 48px);
+    }
+
+    .special-lift-description {
+        font-size: 13px;
+    }
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 700px) {
+    .special-lifts-section {
+        padding: 55px 18px;
+    }
+
+    .special-lifts-header {
+        margin-bottom: 45px;
+    }
+
+    .special-lifts-list {
+        gap: 60px;
+    }
+
+    .special-lift-card,
+    .special-lift-reverse {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 30px;
+    }
+
+    .special-lift-reverse .special-lift-visual,
+    .special-lift-reverse .special-lift-content {
+        order: initial;
+    }
+
+    .special-lift-image-wrapper {
+        height: 360px;
+    }
+
+    .special-lift-title {
+        font-size: clamp(40px, 9vw, 54px);
+    }
+
+    .special-lift-description {
+        font-size: 13px;
+        line-height: 1.9;
+    }
+
+    .special-lift-divider {
+        margin: 24px 0;
+    }
+
+    .special-lift-footer {
+        margin-top: 24px;
+    }
+}
+
+/* ==========================================
+   SMALL MOBILE
+========================================== */
+
+@media (max-width: 400px) {
+    .special-lifts-section {
+        padding: 42px 14px;
+    }
+
+    .special-lift-image-wrapper {
+        height: 300px;
+    }
+
+    .special-lift-image-badge {
+        top: 12px;
+        left: 12px;
+        padding: 9px 11px;
+    }
+
+    .special-lift-title {
+        font-size: 38px;
+    }
+
+    .special-lift-category {
+        font-size: 9px;
+    }
+
+    .special-lift-footer {
+        font-size: 8px;
+    }
+}
+
+/* ACCESSIBILITY */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .special-lifts-section *,
+    .special-lifts-section *::before,
+    .special-lifts-section *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
+}

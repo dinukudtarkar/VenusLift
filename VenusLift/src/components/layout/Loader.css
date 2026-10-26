@@ -1,0 +1,260 @@
+.venus-loader {
+  --gold: #d8b46a;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #101114;
+  color: #fff;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.venus-loader.is-leaving {
+  opacity: 0;
+  transform: scale(1.04);
+  pointer-events: none;
+}
+
+.venus-glow {
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #d8b46a1f, transparent 65%);
+  filter: blur(10px);
+  animation: glowPulse 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* ---------- Lift ---------- */
+
+.lift {
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+  position: relative;
+  width: 100px;
+  margin-bottom: 30px;
+  transform: perspective(600px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+  transition: transform 0.25s ease-out;
+}
+
+.lift-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 8px 10px;
+  color: var(--gold);
+  font-variant-numeric: tabular-nums;
+}
+
+.lift-arrow {
+  animation: arrowUp 1s ease-in-out infinite;
+  transition: opacity 0.3s ease;
+}
+
+.lift-arrow.is-hidden {
+  opacity: 0;
+}
+
+.lift-floor {
+  display: inline-block;
+  animation: floorTick 0.35s ease-out;
+  text-shadow: 0 0 8px #d8b46a88;
+}
+
+.lift-frame {
+  position: relative;
+  height: 125px;
+  border: 2px solid var(--gold);
+  overflow: hidden;
+  perspective: 300px;
+  background: #202126;
+  box-shadow: 0 0 0 1px #0008, 0 12px 30px #000a, 0 0 24px #d8b46a22;
+}
+
+.lift-door {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  z-index: 2;
+  background: linear-gradient(90deg, #34353a, #77777a, #292a2e);
+  border: 1px solid #17181b;
+  transition: transform 0.9s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.lift-door-left {
+  left: 0;
+  animation: peekLeft 2.5s ease-in-out infinite;
+}
+
+.lift-door-right {
+  right: 0;
+  animation: peekRight 2.5s ease-in-out infinite;
+}
+
+/* Final open state once loading hits 100% */
+.lift-frame.is-open .lift-door-left {
+  animation: none;
+  transform: translateX(-96%);
+}
+
+.lift-frame.is-open .lift-door-right {
+  animation: none;
+  transform: translateX(96%);
+}
+
+.lift-light {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(90deg, transparent, #d8b46a55, transparent);
+  opacity: 0;
+  animation: revealLight 2.5s ease-in-out infinite;
+}
+
+.lift-frame.is-open .lift-light {
+  animation: none;
+  opacity: 1;
+  background: linear-gradient(90deg, #d8b46a22, #d8b46aaa, #d8b46a22);
+  transition: opacity 0.6s ease;
+}
+
+.lift-sheen {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 40%,
+    #ffffff14 50%,
+    transparent 60%
+  );
+  transform: translateX(-100%);
+  animation: sheen 3.2s ease-in-out infinite;
+}
+
+.lift-floors {
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0 4px;
+}
+
+.lift-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #3a3b40;
+  transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.lift-dot.is-lit {
+  background: var(--gold);
+  box-shadow: 0 0 8px #d8b46acc;
+  transform: scale(1.15);
+}
+
+/* ---------- Text ---------- */
+
+.venus-title {
+  position: relative;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 5px;
+  margin: 0;
+}
+
+.venus-subtitle {
+  position: relative;
+  color: var(--gold);
+  font-size: 12px;
+  letter-spacing: 3px;
+  margin: 12px 0 28px;
+}
+
+.loading-track {
+  position: relative;
+  width: 160px;
+  height: 2px;
+  background: #3a3b40;
+  overflow: hidden;
+}
+
+.loading-progress {
+  width: 100%;
+  height: 100%;
+  background: var(--gold);
+  transform-origin: left center;
+  transform: scaleX(0);
+  box-shadow: 0 0 8px #d8b46a;
+}
+
+.loading-text {
+  position: relative;
+  color: #999a9f;
+  font-size: 9px;
+  letter-spacing: 3px;
+  margin-top: 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Keyframes ---------- */
+
+@keyframes peekLeft {
+  0%, 15% { transform: translateX(0); }
+  50%, 75% { transform: translateX(-22%); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes peekRight {
+  0%, 15% { transform: translateX(0); }
+  50%, 75% { transform: translateX(22%); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes revealLight {
+  0%, 20%, 100% { opacity: 0; }
+  50%, 75% { opacity: 0.8; }
+}
+
+@keyframes arrowUp {
+  0%, 100% { transform: translateY(3px); }
+  50% { transform: translateY(-3px); }
+}
+
+@keyframes floorTick {
+  from { transform: translateY(-6px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes sheen {
+  0%, 30% { transform: translateX(-100%); }
+  70%, 100% { transform: translateX(100%); }
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.08); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lift,
+  .lift-door,
+  .lift-light,
+  .lift-sheen,
+  .lift-arrow,
+  .lift-floor,
+  .venus-glow,
+  .venus-loader {
+    animation: none;
+    transition: none;
+  }
+}

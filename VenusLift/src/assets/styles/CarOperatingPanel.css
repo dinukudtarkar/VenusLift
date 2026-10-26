@@ -1,0 +1,905 @@
+/* VENUS LIFTS - dark mode car operating panel + single lift simulation */
+
+.cop-section {
+    --cy: #5fe3ff;
+    --fh: 50px;
+    /* one floor */
+    --ch: 44px;
+    /* cabin height */
+    --btn: 30px;
+    width: 100%;
+    padding: 70px 20px;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 50% 0%, #1a2024, #0d1012 70%);
+    color: #e6eef1;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.cop-section *,
+.cop-section *::before,
+.cop-section *::after {
+    box-sizing: border-box;
+}
+
+.cop-container {
+    max-width: 940px;
+    margin: 0 auto;
+}
+
+.cop-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.cop-title {
+    margin: 0 0 12px;
+    font-size: clamp(30px, 4.5vw, 44px);
+    font-weight: 600;
+    letter-spacing: -1px;
+}
+
+.cop-intro {
+    margin: 0 auto;
+    max-width: 520px;
+    color: #8a979d;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+/* selector */
+.cop-switcher {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.cop-switch-button {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 14px 12px;
+    text-align: left;
+    background: #14181b;
+    border: 1px solid #272e33;
+    color: #e6eef1;
+    font-family: inherit;
+    cursor: pointer;
+    transition: border-color .2s, background .2s;
+}
+
+.cop-switch-button b {
+    font-size: 13px;
+}
+
+.cop-switch-button small {
+    font-size: 10px;
+    color: #7b888e;
+}
+
+.cop-switch-button:hover {
+    border-color: #3e7585;
+}
+
+.cop-switch-button.active {
+    border-color: var(--cy);
+    background: #10242b;
+    box-shadow: inset 0 -3px var(--cy);
+}
+
+/* panel left, lift right — always */
+.cop-showcase {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 36px;
+    align-items: start;
+    justify-content: center;
+    padding: 32px 28px;
+    background: #0f1316;
+    border: 1px solid #222a2f;
+}
+
+/* ---------- PANEL SHAPES ---------- */
+.cop-panel-shell {
+    filter: drop-shadow(6px 12px 14px rgba(0, 0, 0, .6));
+}
+
+.cop-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 168px;
+    padding: 18px 16px 16px;
+    border: 1px solid #4a5258;
+    background: linear-gradient(90deg, #171b1e, #3b4247 12%, #272c30 50%, #3b4247 88%, #171b1e);
+    transition: border-radius .3s;
+}
+
+.cop-panel-classic {
+    border-radius: 3px;
+}
+
+.cop-panel-pill {
+    border-radius: 84px;
+    padding: 34px 16px;
+    border-color: #2d6475;
+    background: linear-gradient(90deg, #0a0d0f, #1c2428 20%, #11171a 50%, #1c2428 80%, #0a0d0f);
+}
+
+.cop-panel-arch {
+    border-radius: 84px 84px 6px 6px;
+    padding-top: 30px;
+    background: linear-gradient(90deg, #202529, #4b535a 14%, #30363b 50%, #4b535a 86%, #202529);
+}
+
+.cop-panel-chamfer {
+    border: 0;
+    padding: 30px 18px;
+    background: linear-gradient(90deg, #2a2218, #6a5638 14%, #44382a 50%, #6a5638 86%, #2a2218);
+    clip-path: polygon(24px 0, calc(100% - 24px) 0, 100% 24px, 100% calc(100% - 24px), calc(100% - 24px) 100%, 24px 100%, 0 calc(100% - 24px), 0 24px);
+}
+
+.cop-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 78px;
+    padding: 8px;
+    background: #030506;
+    border: 2px solid #2b3338;
+    border-radius: 4px;
+    color: var(--cy);
+    font-family: "Courier New", monospace;
+}
+
+.cop-panel-pill .cop-display {
+    border-radius: 40px;
+    color: #4dff7a;
+}
+
+.cop-panel-chamfer .cop-display {
+    color: #ffb13b;
+    border-color: #7b6643;
+}
+
+.cop-dir {
+    font-size: 14px;
+    line-height: 1;
+}
+
+.cop-dir.blink {
+    animation: cop-blink .6s infinite alternate;
+}
+
+.cop-num {
+    font-size: 36px;
+    line-height: 1.1;
+    text-shadow: 0 0 10px currentColor;
+}
+
+.cop-multi {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    font-size: 11px;
+    color: var(--cy);
+}
+
+.cop-multi div {
+    display: flex;
+    justify-content: space-between;
+    padding: 1px 6px;
+    opacity: .4;
+}
+
+.cop-multi div.on {
+    opacity: 1;
+    background: rgba(95, 227, 255, .16);
+    text-shadow: 0 0 6px currentColor;
+}
+
+.cop-floor-grid {
+    display: grid;
+    grid-template-columns: repeat(2, var(--btn));
+    gap: 9px 18px;
+}
+
+.cop-row-btns {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    width: 100%;
+    padding-top: 8px;
+    border-top: 1px solid rgba(255, 255, 255, .1);
+}
+
+.cop-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--btn);
+    height: var(--btn);
+    padding: 0;
+    border-radius: 50%;
+    border: 1px solid #5a646b;
+    color: #d3dde1;
+    font: 700 11px/1 inherit;
+    font-family: inherit;
+    cursor: pointer;
+    background: radial-gradient(circle at 35% 30%, #343c42, #151a1d);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .5), inset 0 1px 1px rgba(255, 255, 255, .15);
+    transition: transform .15s, border-color .2s, box-shadow .2s, color .2s;
+}
+
+.cop-btn:hover:not(:disabled) {
+    transform: scale(1.1);
+    border-color: var(--cy);
+}
+
+.cop-btn:active:not(:disabled) {
+    transform: scale(.94);
+}
+
+.cop-btn:disabled {
+    opacity: .5;
+    cursor: wait;
+}
+
+.cop-btn.lit {
+    color: var(--cy);
+    border-color: var(--cy);
+    box-shadow: 0 0 10px rgba(95, 227, 255, .6), inset 0 0 6px rgba(95, 227, 255, .3);
+}
+
+.cop-btn.red.lit {
+    color: #ff8a80;
+    border-color: #ff5a4d;
+    box-shadow: 0 0 10px rgba(255, 90, 77, .7);
+}
+
+.cop-panel-pill .cop-btn.lit {
+    color: #4dff7a;
+    border-color: #4dff7a;
+    box-shadow: 0 0 10px rgba(77, 255, 122, .6);
+}
+
+.cop-panel-chamfer .cop-btn.lit {
+    color: #ffb13b;
+    border-color: #ffb13b;
+    box-shadow: 0 0 10px rgba(255, 177, 59, .6);
+}
+
+.cop-btn i {
+    font-style: normal;
+    display: inline-block;
+}
+
+.spin {
+    animation: cop-spin .6s linear infinite;
+}
+
+.cop-grille {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.cop-grille i {
+    width: 26px;
+    height: 2px;
+    background: #5a646b;
+}
+
+/* ---------- LIFT SIMULATION ---------- */
+.cop-stage {
+    position: relative;
+    justify-self: center;
+    padding: 6px 8px;
+}
+
+.cop-bg {
+    position: absolute;
+    inset: -14px -6px 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: .5;
+}
+
+.tw {
+    position: absolute;
+    border: 1px solid rgba(95, 227, 255, .4);
+    background: rgba(95, 227, 255, .04);
+}
+
+.tw::before {
+    content: "";
+    position: absolute;
+    inset: 5px;
+    background: repeating-linear-gradient(90deg, rgba(95, 227, 255, .32) 0 7px, transparent 7px 15px);
+    -webkit-mask-image: repeating-linear-gradient(0deg, #000 0 16px, transparent 16px var(--fh));
+    mask-image: repeating-linear-gradient(0deg, #000 0 16px, transparent 16px var(--fh));
+}
+
+.tw-spire {
+    left: 50%;
+    top: 0;
+    width: 1px;
+    height: 28px;
+    border: 0;
+    background: rgba(95, 227, 255, .55);
+}
+
+.tw-spire::before {
+    display: none;
+}
+
+.tw-crown {
+    left: 38%;
+    right: 38%;
+    top: 28px;
+    height: 34px;
+}
+
+.tw-mid {
+    left: 26%;
+    right: 26%;
+    top: 62px;
+    height: 52px;
+}
+
+.tw-main {
+    left: 10%;
+    right: 10%;
+    top: 114px;
+    bottom: 0;
+}
+
+.tw-l {
+    left: -6%;
+    width: 14%;
+    top: 48%;
+    bottom: 0;
+}
+
+.tw-r {
+    right: -6%;
+    width: 14%;
+    top: 64%;
+    bottom: 0;
+}
+
+.tw-ground {
+    position: absolute;
+    left: -8%;
+    right: -8%;
+    bottom: 0;
+    height: 1px;
+    background: rgba(95, 227, 255, .55);
+}
+
+.cop-lifthead,
+.cop-stagebody {
+    position: relative;
+    z-index: 1;
+}
+
+.cop-stage.alarm .cop-shaft {
+    animation: cop-alarm .7s infinite alternate;
+}
+
+.cop-lifthead {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 14px;
+}
+
+.cop-lifthead span {
+    color: var(--cy);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+}
+
+.cop-lifthead em {
+    font-style: normal;
+    color: #8a7a5a;
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+
+.cop-stage.alarm .cop-lifthead em {
+    color: #ff6a5d;
+}
+
+.cop-stagebody {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+}
+
+.cop-shaft {
+    position: relative;
+    width: 136px;
+    flex-shrink: 0;
+    height: calc(8 * var(--fh));
+    overflow: hidden;
+    border: 1px solid #2c363b;
+    border-radius: 12px;
+    background: linear-gradient(180deg, rgba(20, 25, 28, .62), rgba(13, 17, 19, .62));
+}
+
+.cop-rail {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(90deg, #5c666c, #aeb8bd 50%, #5c666c);
+    opacity: .28;
+}
+
+.cop-rail.l {
+    left: 10px;
+}
+
+.cop-rail.r {
+    right: 10px;
+}
+
+.cop-line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 0;
+    border-top: 1px dashed rgba(150, 175, 185, .22);
+}
+
+.cop-fnum {
+    position: absolute;
+    left: 17px;
+    bottom: 4px;
+    text-align: left;
+    color: rgba(95, 227, 255, .45);
+    font: 700 10px "Courier New", monospace;
+    letter-spacing: 1px;
+}
+
+.cop-cable {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 1px;
+    background: #a9b6bc;
+    bottom: calc(var(--i) * var(--fh) + (var(--fh) + var(--ch)) / 2);
+    transition: bottom .9s linear;
+}
+
+.cop-cabin {
+    position: absolute;
+    left: 34px;
+    right: 34px;
+    height: var(--ch);
+    bottom: calc(var(--i) * var(--fh) + (var(--fh) - var(--ch)) / 2);
+    transition: bottom .9s linear;
+}
+
+.cop-led {
+    position: absolute;
+    z-index: 8;
+    top: -11px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    border-radius: 5px;
+    background: #06161b;
+    border: 1px solid #2f7f92;
+    color: var(--cy);
+    font: 700 11px "Courier New", monospace;
+    box-shadow: 0 0 8px rgba(95, 227, 255, .35);
+    white-space: nowrap;
+}
+
+.cop-led i {
+    font-style: normal;
+    font-size: 7px;
+}
+
+.cop-car {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 12px;
+    border: 1px solid rgba(220, 235, 240, .55);
+    background: #2a3236;
+    box-shadow: 0 0 0 1px rgba(95, 227, 255, .12), 0 6px 14px rgba(0, 0, 0, .6);
+}
+
+.cop-cabin:not(.dark) .cop-car {
+    box-shadow: 0 0 14px rgba(255, 240, 180, .35), 0 6px 14px rgba(0, 0, 0, .6);
+}
+
+.cop-interior {
+    position: absolute;
+    inset: 0;
+    background: #3a4246 center / cover no-repeat;
+}
+
+.cop-cabin.dark .cop-interior {
+    filter: brightness(.3);
+}
+
+.cop-reflect {
+    position: absolute;
+    inset: 0;
+    z-index: 6;
+    pointer-events: none;
+    background: linear-gradient(115deg, rgba(255, 255, 255, .3) 0 16%, transparent 16% 30%, rgba(255, 255, 255, .12) 30% 38%, transparent 38%);
+}
+
+.cop-base {
+    position: absolute;
+    left: 10%;
+    right: 10%;
+    bottom: -4px;
+    height: 4px;
+    border-radius: 0 0 6px 6px;
+    background: #4fb9c9;
+    box-shadow: 0 2px 10px rgba(79, 185, 201, .8);
+}
+
+.cab-ceiling {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 3;
+    height: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background: linear-gradient(#6b747a, #a9b2b7);
+}
+
+.cab-lamp {
+    width: 22%;
+    height: 3px;
+    border-radius: 3px;
+    background: #444a4e;
+    transition: .3s;
+}
+
+.cab-lamp.on {
+    background: #fffbe0;
+    box-shadow: 0 0 6px #fff4b8, 0 0 12px rgba(255, 240, 170, .9);
+}
+
+.cab-fan {
+    display: flex;
+    width: 8px;
+    height: 8px;
+    align-items: center;
+    justify-content: center;
+    font-size: 8px;
+    line-height: 1;
+    color: #30363a;
+}
+
+.cab-fan i {
+    font-style: normal;
+    display: block;
+}
+
+.cab-fan.on i {
+    animation: cop-spin .35s linear infinite;
+    color: #0f1214;
+}
+
+.cab-glow {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background: radial-gradient(ellipse at 50% 0%, rgba(255, 244, 190, .5), transparent 75%);
+}
+
+.cab-air {
+    position: absolute;
+    z-index: 3;
+    top: 8px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-around;
+    pointer-events: none;
+}
+
+.cab-air span {
+    width: 2px;
+    height: 12px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, .85);
+    animation: cop-air .8s linear infinite;
+}
+
+.cab-air span:nth-child(2) {
+    animation-delay: .27s;
+}
+
+.cab-air span:nth-child(3) {
+    animation-delay: .54s;
+}
+
+.cab-door {
+    position: absolute;
+    z-index: 4;
+    top: 0;
+    bottom: 0;
+    width: 50%;
+    background: linear-gradient(90deg, #8a949a, #dfe6e9 30%, #f4f7f8 50%, #b9c3c8 80%, #858f95);
+    transition: transform .8s cubic-bezier(.65, 0, .35, 1);
+}
+
+.cab-door.l {
+    left: 0;
+    border-right: 1px solid #6e777c;
+}
+
+.cab-door.r {
+    right: 0;
+    border-left: 1px solid #6e777c;
+}
+
+.cop-cabin.open .cab-door.l {
+    transform: translateX(-92%);
+}
+
+.cop-cabin.open .cab-door.r {
+    transform: translateX(92%);
+}
+
+/* floor pills (indicators only, not controls) */
+.cop-pills {
+    display: flex;
+    flex-direction: column;
+}
+
+.cop-pill {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: var(--fh);
+    width: 46px;
+    flex-shrink: 0;
+    position: relative;
+    color: #6d7a80;
+    font-size: 11px;
+    letter-spacing: 1px;
+}
+
+.cop-pill::before {
+    content: "";
+    position: absolute;
+    inset: 11px 0;
+    border: 1px solid #2c363b;
+    border-radius: 14px;
+    background: #101417;
+    z-index: 0;
+    transition: border-color .3s, box-shadow .3s;
+}
+
+.cop-pill {
+    z-index: 0;
+}
+
+.cop-pill>*,
+.cop-pill {
+    isolation: isolate;
+}
+
+.cop-pill.on {
+    color: var(--cy);
+}
+
+.cop-pill.on::before {
+    border-color: var(--cy);
+    box-shadow: 0 0 10px rgba(95, 227, 255, .45);
+}
+
+.cop-pill.next {
+    color: #ffb13b;
+}
+
+.cop-pill.next::before {
+    border-color: #8a6a2c;
+}
+
+.cop-about {
+    display: flex;
+    gap: 16px;
+    max-width: 760px;
+    margin: 36px auto 0;
+}
+
+.cop-about span {
+    flex-shrink: 0;
+    width: 3px;
+    background: var(--cy);
+}
+
+.cop-about p {
+    margin: 0;
+    color: #93a0a6;
+    font-size: 13px;
+    line-height: 1.9;
+}
+
+.cop-disclaimer {
+    max-width: 620px;
+    margin: 22px auto 0;
+    color: #637077;
+    font-size: 10px;
+    line-height: 1.7;
+    text-align: center;
+}
+
+@keyframes cop-blink {
+    from {
+        opacity: .35;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes cop-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes cop-air {
+    from {
+        transform: translateY(0);
+        opacity: 0;
+    }
+
+    30% {
+        opacity: 1;
+    }
+
+    to {
+        transform: translateY(18px);
+        opacity: 0;
+    }
+}
+
+@keyframes cop-alarm {
+    from {
+        box-shadow: 0 0 0 rgba(255, 60, 50, 0);
+        border-color: #2c363b;
+    }
+
+    to {
+        box-shadow: 0 0 26px rgba(255, 60, 50, .65);
+        border-color: #d9443a;
+    }
+}
+
+/* ---------- MOBILE: panel left, lift right ---------- */
+@media (max-width: 700px) {
+    .cop-section {
+        --fh: 46px;
+        --ch: 40px;
+        --btn: 25px;
+        padding: 44px 10px;
+    }
+
+    .cop-switcher {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .cop-showcase {
+        gap: 6px;
+        padding: 18px 6px;
+    }
+
+    .cop-panel {
+        width: 124px;
+        padding: 14px 10px 12px;
+        gap: 8px;
+    }
+
+    .cop-panel-pill {
+        padding: 26px 10px;
+        border-radius: 62px;
+    }
+
+    .cop-panel-arch {
+        border-radius: 62px 62px 6px 6px;
+        padding-top: 22px;
+    }
+
+    .cop-panel-chamfer {
+        padding: 22px 12px;
+        clip-path: polygon(16px 0, calc(100% - 16px) 0, 100% 16px, 100% calc(100% - 16px), calc(100% - 16px) 100%, 16px 100%, 0 calc(100% - 16px), 0 16px);
+    }
+
+    .cop-floor-grid {
+        gap: 7px 14px;
+    }
+
+    .cop-row-btns {
+        gap: 12px;
+    }
+
+    .cop-btn {
+        font-size: 9px;
+    }
+
+    .cop-num {
+        font-size: 28px;
+    }
+
+    .cop-display {
+        min-height: 64px;
+    }
+
+    .cop-stage {
+        padding: 6px 2px;
+    }
+
+    .cop-stagebody {
+        gap: 6px;
+    }
+
+    .cop-shaft {
+        width: 100px;
+    }
+
+    .cop-rail.l {
+        left: 6px;
+    }
+
+    .cop-rail.r {
+        right: 6px;
+    }
+
+    .cop-cabin {
+        left: 24px;
+        right: 24px;
+    }
+
+    .cop-fnum {
+        left: 11px;
+        font-size: 8px;
+        letter-spacing: 0;
+    }
+
+    .cop-pill {
+        width: 34px;
+        font-size: 9px;
+    }
+
+    .cop-led {
+        font-size: 9px;
+        padding: 1px 5px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .cop-section *,
+    .cop-section *::before,
+    .cop-section *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+}

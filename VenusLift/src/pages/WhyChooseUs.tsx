@@ -41,7 +41,7 @@ const WhyChooseUs: React.FC = () => {
 
           {/* Card 2: Creative & Make in India */}
           <div className="why-card why-card-featured">
-            <div className="why-badge">Make in India</div>
+            {/* <div className="why-badge">Make in India</div> */}
             <div className="why-card-icon">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#c9a22e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
